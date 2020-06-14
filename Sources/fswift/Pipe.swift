@@ -19,3 +19,7 @@ public func |> <A, B>(a: A?, f: @escaping (A) -> B) -> B? {
 public func |> <A, B>(a: [A], f: @escaping (A) -> B) -> [B] {
     a.map(f)
 }
+
+public func |> <A, B, E: Swift.Error>(a: Result<A, E>, f: @escaping (A) -> B) -> Result<B, E> {
+    a.map(f)
+}
