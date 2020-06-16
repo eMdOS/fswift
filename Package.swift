@@ -16,7 +16,7 @@ let package = Package(
             dependencies: []
         ),
         .testTarget(
-            name: "fswift_tests",
+            name: "fswiftTests",
             dependencies: ["fswift"]
         ),
     ],
