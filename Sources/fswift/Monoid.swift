@@ -20,3 +20,9 @@ extension String: Monoid {
 extension Array: Monoid {
     public static var empty: Array { [] }
 }
+
+// MARK: Optional
+
+extension Optional: Monoid {
+    public static var empty: Optional { nil }
+}

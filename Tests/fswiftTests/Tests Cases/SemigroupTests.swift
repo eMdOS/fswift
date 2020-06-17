@@ -13,4 +13,8 @@ final class SemigroupTests: XCTestCase {
     func test_array_isSemigroup() {
         XCTAssert(Law<[String]>.isAssociative(a: ["a"], b: ["b"], c: ["c"]))
     }
+
+    func test_optional_isSemigroup() {
+        XCTAssert(Law<String?>.isAssociative(a: "a", b: "b", c: "c"))
+    }
 }

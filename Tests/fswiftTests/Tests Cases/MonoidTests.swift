@@ -13,4 +13,8 @@ final class MonoidTests: XCTestCase {
     func test_array_isMonoid() {
         XCTAssert(Law<[String]>.hasNeutralIdentity(a: ["a"]))
     }
+
+    func test_optional_isMonoid() {
+        XCTAssert(Law<String?>.hasNeutralIdentity(a: "a"))
+    }
 }

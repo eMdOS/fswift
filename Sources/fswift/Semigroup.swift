@@ -24,3 +24,11 @@ extension Array: Semigroup {
         left + right
     }
 }
+
+// MARK: Optional
+
+extension Optional: Semigroup {
+    public static func <> (left: Optional, right: Optional) -> Optional {
+        left ?? right
+    }
+}
