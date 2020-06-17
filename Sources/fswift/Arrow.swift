@@ -4,7 +4,7 @@
 
 precedencegroup ForwardComposition {
     associativity: left
-    higherThan: ForwardApplication
+    higherThan: ForwardApplication, FunctorPrecedence, ApplicativePrecedence
 }
 
 infix operator >>> : ForwardComposition
