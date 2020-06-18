@@ -1,5 +1,7 @@
 // MARK: - Arrow
 
+public func id<A>(_ a: A) -> A { a }
+
 // MARK: Forward Composition
 
 precedencegroup ForwardComposition {
