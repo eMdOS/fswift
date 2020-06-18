@@ -39,7 +39,7 @@ public extension Either {
 }
 
 public extension Either {
-    func swap() -> Either<Right, Left> {
+    func flip() -> Either<Right, Left> {
         switch self {
         case .left(let newRight):
             return .right(newRight)
