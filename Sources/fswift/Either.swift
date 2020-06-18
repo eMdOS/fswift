@@ -58,6 +58,19 @@ public extension Either {
     }
 }
 
+extension Either: Equatable where Left: Equatable, Right: Equatable {
+    public static func == (lhs: Either, rhs: Either) -> Bool {
+        switch (lhs, rhs) {
+        case (.left(let leftValue), .left(let rightValue)):
+            return leftValue == rightValue
+        case (.right(let leftValue), .right(let rightValue)):
+            return leftValue == rightValue
+        default:
+            return false
+        }
+    }
+}
+
 // MARK: - map
 
 public extension Either {
@@ -125,15 +138,19 @@ public extension Either {
     }
 }
 
-extension Either: Equatable where Left: Equatable, Right: Equatable {
-    public static func == (lhs: Either, rhs: Either) -> Bool {
-        switch (lhs, rhs) {
-        case (.left(let leftValue), .left(let rightValue)):
-            return leftValue == rightValue
+// MARK: - Semigroup
+
+extension Either: Semigroup where Left: Semigroup, Right: Semigroup {
+    public static func <> (left: Either, right: Either) -> Either {
+        switch (left, right) {
         case (.right(let leftValue), .right(let rightValue)):
-            return leftValue == rightValue
-        default:
-            return false
+            return .right(leftValue <> rightValue)
+        case (.right(let leftValue), .left):
+            return .right(leftValue)
+        case (.left, .right(let rightValue)):
+            return .right(rightValue)
+        case (.left(let leftValue), .left(let rightValue)):
+            return .left(leftValue <> rightValue)
         }
     }
 }
