@@ -83,6 +83,10 @@ public extension Either {
         }
     }
 
+    func leftMap<LeftSubValue>(_ keyPath: KeyPath<Left, LeftSubValue>) -> Either<LeftSubValue, Right> {
+        leftMap { $0[keyPath: keyPath] }
+    }
+
     func rightMap<NewRight>(_ transform: (Right) -> NewRight) -> Either<Left, NewRight> {
         switch self {
         case .right(let value):
@@ -90,6 +94,10 @@ public extension Either {
         case .left(let value):
             return .left(value)
         }
+    }
+
+    func rightMap<RightSubValue>(_ keyPath: KeyPath<Right, RightSubValue>) -> Either<Left, RightSubValue> {
+        rightMap { $0[keyPath: keyPath] }
     }
 }
 
