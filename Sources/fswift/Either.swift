@@ -48,12 +48,27 @@ public extension Either {
         }
     }
 
-    func fold<T>(_ onLeft: (Left) -> T, _ onRight: (Right) -> T) -> T {
+    func fold<Value>(
+        _ onLeft: (Left) -> Value,
+        _ onRight: (Right) -> Value
+    ) -> Value {
         switch self {
         case .left(let left):
             return onLeft(left)
         case .right(let right):
             return onRight(right)
+        }
+    }
+
+    func fold<SubVlaue>(
+        _ leftKeyPath: KeyPath<Left, SubVlaue>,
+        _ rightKeyPath: KeyPath<Right, SubVlaue>
+    ) -> SubVlaue {
+        switch self {
+        case .left(let left):
+            return left[keyPath: leftKeyPath]
+        case .right(let right):
+            return right[keyPath: rightKeyPath]
         }
     }
 }
@@ -74,7 +89,9 @@ extension Either: Equatable where Left: Equatable, Right: Equatable {
 // MARK: - map
 
 public extension Either {
-    func leftMap<NewLeft>(_ transform: (Left) -> NewLeft) -> Either<NewLeft, Right> {
+    func leftMap<NewLeft>(
+        _ transform: (Left) -> NewLeft
+    ) -> Either<NewLeft, Right> {
         switch self {
         case .left(let value):
             return .left(transform(value))
@@ -83,11 +100,15 @@ public extension Either {
         }
     }
 
-    func leftMap<LeftSubValue>(_ keyPath: KeyPath<Left, LeftSubValue>) -> Either<LeftSubValue, Right> {
+    func leftMap<LeftSubValue>(
+        _ keyPath: KeyPath<Left, LeftSubValue>
+    ) -> Either<LeftSubValue, Right> {
         leftMap { $0[keyPath: keyPath] }
     }
 
-    func rightMap<NewRight>(_ transform: (Right) -> NewRight) -> Either<Left, NewRight> {
+    func rightMap<NewRight>(
+        _ transform: (Right) -> NewRight
+    ) -> Either<Left, NewRight> {
         switch self {
         case .right(let value):
             return .right(transform(value))
@@ -96,7 +117,9 @@ public extension Either {
         }
     }
 
-    func rightMap<RightSubValue>(_ keyPath: KeyPath<Right, RightSubValue>) -> Either<Left, RightSubValue> {
+    func rightMap<RightSubValue>(
+        _ keyPath: KeyPath<Right, RightSubValue>
+    ) -> Either<Left, RightSubValue> {
         rightMap { $0[keyPath: keyPath] }
     }
 }
@@ -104,7 +127,9 @@ public extension Either {
 // MARK: - apply
 
 public extension Either {
-    func leftApply<NewLeft>(_ transform: Either<(Left) -> NewLeft, Right>) -> Either<NewLeft, Right> {
+    func leftApply<NewLeft>(
+        _ transform: Either<(Left) -> NewLeft, Right>
+    ) -> Either<NewLeft, Right> {
         switch transform {
         case .left(let transform):
             return leftMap(transform)
@@ -113,7 +138,9 @@ public extension Either {
         }
     }
 
-    func rightApply<NewRight>(_ transform: Either<Left, (Right) -> NewRight>) -> Either<Left, NewRight> {
+    func rightApply<NewRight>(
+        _ transform: Either<Left, (Right) -> NewRight>
+    ) -> Either<Left, NewRight> {
         switch transform {
         case .left(let value):
             return .left(value)
@@ -126,7 +153,9 @@ public extension Either {
 // MARK: - flatMap
 
 public extension Either {
-    func leftFlatMap<NewLeft>(_ transform: (Left) -> Either<NewLeft, Right>) -> Either<NewLeft, Right> {
+    func leftFlatMap<NewLeft>(
+        _ transform: (Left) -> Either<NewLeft, Right>
+    ) -> Either<NewLeft, Right> {
         switch self {
         case .left(let value):
             return transform(value)
@@ -136,7 +165,9 @@ public extension Either {
     }
 
 
-    func rightFlatMap<NewRight>(_ transform: (Right) -> Either<Left, NewRight>) -> Either<Left, NewRight> {
+    func rightFlatMap<NewRight>(
+        _ transform: (Right) -> Either<Left, NewRight>
+    ) -> Either<Left, NewRight> {
         switch self {
         case .right(let value):
             return transform(value)
