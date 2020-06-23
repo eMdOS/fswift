@@ -1,42 +1,12 @@
 
+// MARK: - Either
+
 public enum Either<Left, Right> {
     case left(Left)
     case right(Right)
 }
 
-public extension Either {
-    var isLeft: Bool {
-        switch self {
-        case .left:
-            return true
-        case .right:
-            return false
-        }
-    }
-
-    var left: Left? {
-        guard case .left(let left) = self else {
-            return nil
-        }
-        return left
-    }
-
-    var isRight: Bool {
-        switch self {
-        case .right:
-            return true
-        case .left:
-            return false
-        }
-    }
-
-    var right: Right? {
-        guard case .right(let right) = self else {
-            return nil
-        }
-        return right
-    }
-}
+// MARK: flip
 
 public extension Either {
     func flip() -> Either<Right, Left> {
@@ -47,7 +17,11 @@ public extension Either {
             return .left(newLeft)
         }
     }
+}
 
+// MARK: fold
+
+public extension Either {
     func fold<Value>(
         _ onLeft: (Left) -> Value,
         _ onRight: (Right) -> Value
@@ -73,6 +47,44 @@ public extension Either {
     }
 }
 
+// MARK: left side
+
+public extension Either {
+    var isLeft: Bool {
+        switch self {
+        case .left: return true
+        case .right: return false
+        }
+    }
+
+    var left: Left? {
+        guard case .left(let left) = self else {
+            return nil
+        }
+        return left
+    }
+}
+
+// MARK: right side
+
+public extension Either {
+    var isRight: Bool {
+        switch self {
+        case .right: return true
+        case .left: return false
+        }
+    }
+
+    var right: Right? {
+        guard case .right(let right) = self else {
+            return nil
+        }
+        return right
+    }
+}
+
+// MARK: Equatable
+
 extension Either: Equatable where Left: Equatable, Right: Equatable {
     public static func == (lhs: Either, rhs: Either) -> Bool {
         switch (lhs, rhs) {
@@ -86,7 +98,11 @@ extension Either: Equatable where Left: Equatable, Right: Equatable {
     }
 }
 
-// MARK: - map
+// MARK: Hashable
+
+extension Either: Hashable where Left: Hashable, Right: Hashable {}
+
+// MARK: map | functor
 
 public extension Either {
     func leftMap<NewLeft>(
@@ -124,7 +140,7 @@ public extension Either {
     }
 }
 
-// MARK: - apply
+// MARK: apply | applicative
 
 public extension Either {
     func leftApply<NewLeft>(
@@ -150,7 +166,7 @@ public extension Either {
     }
 }
 
-// MARK: - flatMap
+// MARK: flatMap | monad
 
 public extension Either {
     func leftFlatMap<NewLeft>(
@@ -164,7 +180,6 @@ public extension Either {
         }
     }
 
-
     func rightFlatMap<NewRight>(
         _ transform: (Right) -> Either<Left, NewRight>
     ) -> Either<Left, NewRight> {
@@ -177,7 +192,7 @@ public extension Either {
     }
 }
 
-// MARK: - Semigroup
+// MARK: Semigroup
 
 extension Either: Semigroup where Left: Semigroup, Right: Semigroup {
     public static func <> (left: Either, right: Either) -> Either {
