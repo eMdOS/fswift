@@ -25,10 +25,6 @@ public extension Sequence {
     func first(where keyPath: KeyPath<Element, Bool>) -> Element? {
         first(where: { $0[keyPath: keyPath] })
     }
-
-    func filter(by predicate: Predicate<Iterator.Element>) -> [Iterator.Element] {
-        filter({ predicate.transform($0) })
-    }
 }
 
 // MARK: - Ordering

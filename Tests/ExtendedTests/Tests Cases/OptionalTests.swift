@@ -1,5 +1,5 @@
 import XCTest
-import fswift
+import Extended
 
 final class OptionalTests: XCTestCase {
     struct ErrorStub: Swift.Error {}
@@ -15,11 +15,11 @@ final class OptionalTests: XCTestCase {
 
     let nilString: String? = nil
     let nonNilString: String? = "non-nil"
-    let emptyString: String? = String.empty
+    let emptyString: String? = ""
 
     let nilCollection: [Int]? = nil
     let nonNilCollection: [Int]? = [0]
-    let emptyCollection: [Int]? = .empty
+    let emptyCollection: [Int]? = []
 }
 
 extension OptionalTests {
@@ -47,7 +47,7 @@ extension OptionalTests {
     }
 
     func test_orEmpty() {
-        XCTAssertEqual(String.empty, nilString.orEmpty)
+        XCTAssertEqual("", nilString.orEmpty)
         XCTAssertEqual("non-nil", nonNilString.orEmpty)
     }
 
@@ -95,12 +95,6 @@ extension OptionalTests {
     func test_filterWhen_predicate() {
         XCTAssertNil(stub.filter(when: { $0.testFalse }))
         XCTAssertNotNil(stub.filter(when: { $0.testTrue }))
-
-        let predicateFalse = Predicate<Stub> { _ in false }
-        XCTAssertNil(stub.filter(when: predicateFalse))
-
-        let predicateTrue = Predicate<Stub> { _ in true }
-        XCTAssertNotNil(stub.filter(when: predicateTrue))
     }
 
     func test_filterWhen_keyPath() {

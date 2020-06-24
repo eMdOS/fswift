@@ -1,5 +1,5 @@
 import XCTest
-import fswift
+import Algebra
 
 final class MonoidTests: XCTestCase {
     func test_monoid_concat() {

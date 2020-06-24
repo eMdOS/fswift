@@ -1,3 +1,4 @@
+import Arrows
 
 public struct Endofunction<A>: Wrapper {
     public var unwrap: (A) -> A

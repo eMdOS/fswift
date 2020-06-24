@@ -1,4 +1,4 @@
-import fswift
+import Algebra
 
 enum Law<Element: Equatable> {
     static func isAssociative(a: Element, b: Element, c: Element, operation: (Element, Element) -> Element) -> Bool {

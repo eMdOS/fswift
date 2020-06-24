@@ -1,5 +1,5 @@
 import XCTest
-import fswift
+import Algebra
 
 final class SemigroupTests: XCTestCase {
     func test_semigroup_concat() {

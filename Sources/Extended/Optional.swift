@@ -56,13 +56,6 @@ public extension Optional {
         }
         return self
     }
-
-    func filter(when predicate: Predicate<Wrapped>) -> Self {
-        guard let unwrappedValue = self, predicate.transform(unwrappedValue) else {
-            return nil
-        }
-        return unwrappedValue
-    }
 }
 
 // MARK: - Side effects
@@ -94,7 +87,7 @@ public extension Optional {
 
 public extension Optional where Wrapped == String {
     var orEmpty: String {
-        or(.empty)
+        or("")
     }
 
     var isNilOrEmpty: Bool {

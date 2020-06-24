@@ -1,3 +1,4 @@
+import Arrows
 
 public struct Function<A, B>: Wrapper {
     public let unwrap: (A) -> B
