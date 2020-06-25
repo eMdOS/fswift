@@ -33,3 +33,19 @@ extension Optional: Semigroup {
         left ?? right
     }
 }
+
+// MARK: And
+
+extension And: Semigroup {
+    public static func <> (left: And, right: And) -> And {
+        And(left.unwrap && right.unwrap)
+    }
+}
+
+// MARK: Or
+
+extension Or: Semigroup {
+    public static func <> (left: Or, right: Or) -> Or {
+        Or(left.unwrap || right.unwrap)
+    }
+}

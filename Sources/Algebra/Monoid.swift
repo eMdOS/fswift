@@ -26,3 +26,15 @@ extension Array: Monoid {
 extension Optional: Monoid {
     public static var empty: Optional { nil }
 }
+
+// MARK: And
+
+extension And: Monoid {
+    public static let empty: And = true
+}
+
+// MARK: Or
+
+extension Or: Monoid {
+    public static let empty: Or = false
+}
