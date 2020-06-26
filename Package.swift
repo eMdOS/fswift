@@ -4,13 +4,7 @@ import PackageDescription
 let package = Package(
     name: "fswift",
     products: [
-        .library(name: "Arrows", targets: ["Arrows"]),
-        .library(name: "Algebra", targets: ["Algebra"]),
-        .library(name: "Extended", targets: ["Extended"]),
-        .library(
-            name: "fswift",
-            targets: ["Arrows", "Algebra", "Extended"]
-        )
+        .library(name: "fswift", targets: ["Arrows", "Algebra", "Extended"])
     ],
     dependencies: [],
     targets: [
