@@ -2,6 +2,8 @@
 
 public func id<A>(_ a: A) -> A { a }
 
+public func void<A>(_ a: A) -> Void { () }
+
 // MARK: Forward Composition
 
 precedencegroup ForwardComposition {
